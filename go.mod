@@ -1,6 +1,6 @@
 module github.com/masih/fdbmeter
 
-go 1.20
+go 1.23
 
 require (
 	// Foundation DB golang binding version 7.3.7
