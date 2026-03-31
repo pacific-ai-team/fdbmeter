@@ -1,4 +1,4 @@
-FROM golang:1.20-bullseye as build
+FROM golang:1.25-bookworm as build
 
 ARG FDB_VERSION='7.3.7'
 ARG FDB_CLIENTS_DEB_SHA256_SUM='1b620971319c3ad149f2fb09b2fed639fb558120a296538133c4f2358836e983'
@@ -13,7 +13,7 @@ RUN go mod download
 COPY . .
 RUN go build -o /go/bin/fdbmeter ./cmd/fdbmeter
 
-FROM gcr.io/distroless/base-debian11
+FROM gcr.io/distroless/base-debian12
 
 COPY --from=build /go/bin/fdbmeter /usr/bin/
 COPY --from=build /usr/lib/libfdb_c.so \
