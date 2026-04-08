@@ -1,4 +1,10 @@
-FROM golang:1.25-bookworm as build
+FROM golang:1.25.5-bookworm AS build
+
+# Security-patched OpenSSL in the build environment (bookworm 3.x; supersedes legacy bullseye 1.1.1 pins).
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends ca-certificates && \
+    apt-get upgrade -y openssl libssl3 && \
+    rm -rf /var/lib/apt/lists/*
 
 ARG FDB_VERSION='7.3.7'
 ARG FDB_CLIENTS_DEB_SHA256_SUM='1b620971319c3ad149f2fb09b2fed639fb558120a296538133c4f2358836e983'
@@ -13,7 +19,13 @@ RUN go mod download
 COPY . .
 RUN go build -o /go/bin/fdbmeter ./cmd/fdbmeter
 
-FROM gcr.io/distroless/base-debian12
+# bookworm-slim + upgraded openssl/libssl3 for scanner-visible crypto packages (vs minimal distroless base).
+FROM debian:bookworm-slim
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends ca-certificates && \
+    apt-get upgrade -y openssl libssl3 && \
+    rm -rf /var/lib/apt/lists/*
 
 COPY --from=build /go/bin/fdbmeter /usr/bin/
 COPY --from=build /usr/lib/libfdb_c.so \
