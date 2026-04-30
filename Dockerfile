@@ -1,4 +1,4 @@
-FROM golang:1.25.5-bookworm AS build
+FROM golang:1.26.2-bookworm AS build
 
 # Security-patched OpenSSL in the build environment (bookworm 3.x; supersedes legacy bullseye 1.1.1 pins).
 RUN apt-get update && \
