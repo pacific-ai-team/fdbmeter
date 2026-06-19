@@ -3,7 +3,7 @@ FROM golang:1.26.2-bookworm AS build
 # Security-patched crypto libs in the build environment (bookworm 3.x).
 RUN apt-get update && \
     apt-get install -y --no-install-recommends ca-certificates openssl libssl3 libgnutls30 && \
-    apt-get install -y --only-upgrade openssl libssl3 && \
+    apt-get install -y --no-install-recommends --only-upgrade openssl libssl3 && \
     rm -rf /var/lib/apt/lists/*
 
 ARG FDB_VERSION='7.3.7'
@@ -24,7 +24,7 @@ FROM debian:bookworm-slim
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends ca-certificates openssl libssl3 libgnutls30 && \
-    apt-get install -y --only-upgrade openssl libssl3 && \
+    apt-get install -y --no-install-recommends --only-upgrade openssl libssl3 && \
     rm -rf /var/lib/apt/lists/*
 
 COPY --from=build /go/bin/fdbmeter /usr/bin/
