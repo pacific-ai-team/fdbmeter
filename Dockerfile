@@ -1,4 +1,4 @@
-FROM golang:1.26.4-bookworm AS build
+FROM golang:1.26.7-bookworm AS build
 
 # Security-patched crypto libs in the build environment (bookworm 3.x).
 RUN apt-get update && \
