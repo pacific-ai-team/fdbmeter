@@ -264,7 +264,7 @@ Alternatively, run `fdbmeter` via a container runtime environment which only req
 runtime of your choice.
 
 * Golang.
-* FoundationDB C bindings compatible with API version `710` and above. See
+* FoundationDB C headers supporting API version `730` to build the Go bindings. CI tests with the FoundationDB 7.3.7 client. See
   FoundationDB [release](https://github.com/apple/foundationdb/releases/latest) page.
 
 ## Install
