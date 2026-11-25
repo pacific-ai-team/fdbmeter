@@ -1,10 +1,13 @@
 package fdbmeter
 
 import (
+	"embed"
 	"encoding/json"
-	"os"
 	"testing"
 )
+
+//go:embed testdata/*.json
+var statusFixtures embed.FS
 
 func TestStatusDecode(t *testing.T) {
 	tests := []struct {
@@ -15,7 +18,7 @@ func TestStatusDecode(t *testing.T) {
 	}
 	for _, test := range tests {
 		t.Run(test.jsonFile, func(t *testing.T) {
-			f, err := os.Open(test.jsonFile)
+			f, err := statusFixtures.Open(test.jsonFile)
 			if err != nil {
 				t.Fatal(err)
 			}

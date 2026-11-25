@@ -44,7 +44,7 @@ jobs:
         uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
         with:
           path: ${{ steps.inputs.outputs.path }}
-          key: ${{ steps.inputs.outputs.prefix }}${{ github.sha }}
+          key: ${{ steps.inputs.outputs.prefix }}${{ hashFiles('**/*.go', '**/*.c', '**/*.h', '**/*.s', '**/*.S') }}
           restore-keys: ${{ steps.inputs.outputs.prefix }}
       - name: Go information
         run: |
