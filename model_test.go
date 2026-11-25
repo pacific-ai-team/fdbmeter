@@ -3,6 +3,7 @@ package fdbmeter
 import (
 	"embed"
 	"encoding/json"
+	"io/fs"
 	"testing"
 )
 
@@ -10,15 +11,13 @@ import (
 var statusFixtures embed.FS
 
 func TestStatusDecode(t *testing.T) {
-	tests := []struct {
-		jsonFile string
-	}{
-		{jsonFile: "testdata/status1.json"},
-		{jsonFile: "testdata/status2.json"},
+	files, err := fs.Glob(statusFixtures, "testdata/*.json")
+	if err != nil {
+		t.Fatal(err)
 	}
-	for _, test := range tests {
-		t.Run(test.jsonFile, func(t *testing.T) {
-			f, err := statusFixtures.Open(test.jsonFile)
+	for _, file := range files {
+		t.Run(file, func(t *testing.T) {
+			f, err := statusFixtures.Open(file)
 			if err != nil {
 				t.Fatal(err)
 			}
