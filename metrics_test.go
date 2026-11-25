@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"os"
 	"reflect"
 	"testing"
 
@@ -99,7 +98,7 @@ func TestMetricsPopulatesValues(t *testing.T) {
 	}
 	for _, test := range tests {
 		t.Run(test.jsonFile, func(t *testing.T) {
-			f, err := os.Open(test.jsonFile)
+			f, err := statusFixtures.Open(test.jsonFile)
 			if err != nil {
 				t.Fatal(err)
 			}
