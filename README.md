@@ -267,6 +267,17 @@ runtime of your choice.
 * FoundationDB C headers supporting API version `730` to build the Go bindings. CI tests with the FoundationDB 7.3.7 client. See
   FoundationDB [release](https://github.com/apple/foundationdb/releases/latest) page.
 
+## Running the tests
+
+With the FoundationDB client installed, run the same two checks as CI from the repository root:
+
+```sh
+go test -v -shuffle=on ./...
+go test -v -race ./...
+```
+
+For a fresh race run even when all inputs match a previous pass, add `-count=1`.
+
 ## Install
 
 To install `fdbmeter` binary directly via Golang, run:
